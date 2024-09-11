@@ -1,6 +1,6 @@
 <?php
 
-use App\Providers\RepositoryProvider;
+use App\Provider\RepositoryProvider;
 use DI\Container;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
@@ -12,12 +12,12 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use App\Repository\Customer\CustomerRepositoryInterface;
 use DI\ContainerBuilder;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
-$settings = require __DIR__ . '/config/app.php';
+$settings = require __DIR__ . '/../config/app.php';
 
 $containerBuilder = new ContainerBuilder();
 

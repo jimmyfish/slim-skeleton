@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace App\Provider;
 
 use Doctrine\ORM\EntityManager;
 use App\Repository\Customer\CustomerRepository;

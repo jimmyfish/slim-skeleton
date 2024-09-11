@@ -2,13 +2,10 @@
 
 use Slim\Factory\AppFactory;
 
-$container = require __DIR__ . '/../bootstrap.php';
+$container = require __DIR__ . '/../src/bootstrap.php';
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();
-
-// for dependency injection
-// $app = \DI\Bridge\Slim\Bridge::create($container);
 
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware(true, true, true);
