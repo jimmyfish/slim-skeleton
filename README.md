@@ -25,7 +25,7 @@ $ cp .env.example .env
 
 for example
 
-```bash
+```dotenv
 DB_DRIVER=pdo_pgsql
 DB_HOST=127.0.0.1
 DB_DATABASE=your_database
