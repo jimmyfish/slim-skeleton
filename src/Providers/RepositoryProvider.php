@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use App\Repository\Customer\CustomerRepository;
 use App\Repository\Customer\CustomerRepositoryInterface;
 
-class RepositoryAppProvider
+class RepositoryProvider
 {
     public static function register()
     {

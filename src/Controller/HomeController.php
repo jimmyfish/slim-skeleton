@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Repository\Customer\CustomerRepositoryInterface;
 use App\Service\HomeService;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 class HomeController extends BaseController
 {

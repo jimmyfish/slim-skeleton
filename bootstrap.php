@@ -1,6 +1,6 @@
 <?php
 
-use App\Providers\RepositoryAppProvider;
+use App\Providers\RepositoryProvider;
 use DI\Container;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
@@ -31,7 +31,7 @@ $containerBuilder->addDefinitions([
     },
 ]);
 
-$containerBuilder->addDefinitions(RepositoryAppProvider::register());
+$containerBuilder->addDefinitions(RepositoryProvider::register());
 
 $container = $containerBuilder->build();
 
