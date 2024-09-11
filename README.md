@@ -85,4 +85,4 @@ This skeleton contains the CLI for Doctrine as well. To run doctrine cli, use
 ## Contributing
 
 - Just fork this project and open PR
-- Please follow this contributing (code of conduct)[https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors]
+- Please follow the CONTRIBUTING.md for the [contributing rules](https://github.com/jimmyfish/slim-skeleton/blob/master/CONTRIBUTING.md)
