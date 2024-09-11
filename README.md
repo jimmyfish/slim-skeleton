@@ -23,13 +23,15 @@ $ cp .env.example .env
 
 ### Configuring the database
 
-```dotenv
+for example
+
+```bash
 DB_DRIVER=pdo_pgsql
-DB_HOST=
-DB_DATABASE=
-DB_USERNAME=
-DB_PASSWORD=
-DB_PORT=
+DB_HOST=127.0.0.1
+DB_DATABASE=your_database
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_user_password
+DB_PORT=5432
 ```
 
 DBAL Drivers can be configure using this [pdo lists](https://www.doctrine-project.org/projects/doctrine-dbal/en/4.1/reference/configuration.html)
