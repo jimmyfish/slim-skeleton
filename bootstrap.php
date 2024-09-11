@@ -24,7 +24,7 @@ $containerBuilder = new ContainerBuilder();
 $containerBuilder->addDefinitions([
     EntityManager::class => function () use ($settings) {
         $cache = $settings['doctrine']['dev_mode'] ? new ArrayAdapter() : new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']);
-        $config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/src/Entity'], $settings['doctrine']['dev_mode'], null, $cache);
+        $config = ORMSetup::createAttributeMetadataConfiguration($settings['doctrine']['metadata_dirs'], $settings['doctrine']['dev_mode'], null, $cache);
         $connection = DriverManager::getConnection($settings['doctrine']['connection']);
 
         return new EntityManager($connection, $config);
@@ -35,24 +35,4 @@ $containerBuilder->addDefinitions(RepositoryAppProvider::register());
 
 $container = $containerBuilder->build();
 
-AppFactory::setContainer($container);
-$app = AppFactory::create();
-
-// for dependency injection
-// $app = \DI\Bridge\Slim\Bridge::create($container);
-
-$app->addRoutingMiddleware();
-$app->addErrorMiddleware(true, true, true);
-
-$app->add(function ($request, $handler) {
-    $response = $handler->handle($request);
-
-    return $response
-        ->withHeader('Access-Control-Allow-Origin', '*')
-        ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-        ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-});
-
-require __DIR__ . '/routes/api.php';
-
-return $app;
+return $container;
