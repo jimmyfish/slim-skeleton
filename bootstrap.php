@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RepositoryAppProvider;
 use DI\Container;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
@@ -26,12 +27,11 @@ $containerBuilder->addDefinitions([
         $config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/src/Entity'], $settings['doctrine']['dev_mode'], null, $cache);
         $connection = DriverManager::getConnection($settings['doctrine']['connection']);
 
-        return  new EntityManager($connection, $config);
+        return new EntityManager($connection, $config);
     },
-    CustomerRepositoryInterface::class => function ($container) {
-        return new CustomerRepository($container->get(EntityManager::class));
-    }
 ]);
+
+$containerBuilder->addDefinitions(RepositoryAppProvider::register());
 
 $container = $containerBuilder->build();
 
