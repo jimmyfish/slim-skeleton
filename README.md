@@ -17,8 +17,8 @@
 
 ### Copying `.env` from `.env.example`
 
-```console
-$ cp .env.example .env
+```bash
+cp .env.example .env
 ```
 
 ### Configuring the database
@@ -41,8 +41,32 @@ DBAL Drivers can be configure using this [pdo lists](https://www.doctrine-projec
 Generate composer autoload using:
 
 ```bash
-$ composer install
+composer install
 ```
+
+## Configuring the server
+
+### Using PHP Build in server
+
+This app can be run using simple PHP Built in server. Just run:
+
+```bash
+php -S localhost:1234 -t public
+```
+
+Now you can navigate your base url to **http://localhost:1234/**
+
+### Using Valet
+
+To use of valet to run the app
+
+```bash
+valet links skeleton
+```
+
+Now you can navigate your base url to **http://skeleton.test**
+
+PS. **\*.test** subdomain should following your valet configuration
 
 ## Miscellaneous
 
@@ -51,5 +75,5 @@ $ composer install
 This skeleton contains the CLI for Doctrine as well. To run doctrine cli, use
 
 ```bash
-$ ./bin/doctrine list
+./bin/doctrine list
 ```
