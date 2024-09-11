@@ -1,37 +1,36 @@
 <?php
 
-use DI\ContainerBuilder;
+use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
-use Slim\Factory\AppFactory;
-use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\ORMSetup;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use UMA\DIC\Container;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$containerBuilder = new ContainerBuilder();
+$container = new Container(require __DIR__ . '/config/app.php');
 
-// $containerBuilder->addDefinitions([
-//     EntityManager::class => function ($c) {
-//         // $dbConfig = require __DIR__ . '/config/database.php';
+$container->set(EntityManager::class, static function (Container $c): EntityManager {
+    $settings = $c->get('settings');
 
-//         var_dump($c);
-//     }
-// ]);
+    $cache = $settings['doctrine']['dev_mode'] ?
+        new ArrayAdapter() :
+        new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']);
 
-$container = $containerBuilder->build();
+    $config = ORMSetup::createAttributeMetadataConfiguration(
+        $settings['doctrine']['metadata_dirs'],
+        $settings['doctrine']['dev_mode'],
+        null,
+        $cache
+    );
 
-// AppFactory::setContainer($container);
-// $app = AppFactory::create();
+    $connection = DriverManager::getConnection($settings['doctrine']['connection']);
 
+    return new EntityManager($connection, $config);
+});
 
-// for dependency injection
-$app = \DI\Bridge\Slim\Bridge::create($container);
-
-$app->addRoutingMiddleware();
-$app->addErrorMiddleware(true, true, true);
-
-require __DIR__ . '/routes/api.php';
-
-return $app;
+return $container;

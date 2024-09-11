@@ -10,13 +10,10 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\SequenceGenerator;
 
-#[Entity]
-#[Table(name: 'customers')]
+#[Entity, Table(name: 'customers')]
 class Customer
 {
-    #[Id]
-    #[Column(type: Types::INTEGER)]
-    #[GeneratedValue(strategy: 'AUTO')]
+    #[Id, Column(type: Types::INTEGER), GeneratedValue(strategy: 'AUTO')]
     private int|null $id;
 
     #[Column(type: Types::STRING)]
