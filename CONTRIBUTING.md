@@ -7,7 +7,7 @@ Thank you for considering contributing to this project! We appreciate your time 
 1. **Fork the repository** and create your feature branch:
 
    ```bash
-   git checkout -b feature/my-feature
+   git checkout -b feat/my-feature
    ```
 
 2. **Make your changes**, ensuring you follow the existing code style and add appropriate tests.
@@ -21,7 +21,7 @@ Thank you for considering contributing to this project! We appreciate your time 
 4. **Push your branch** to GitHub:
 
    ```bash
-   git push origin feature/my-feature
+   git push origin feat/my-feature
    ```
 
 5. **Submit a pull request** (PR) to the main repository:
