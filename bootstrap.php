@@ -1,38 +1,39 @@
 <?php
 
-use UMA\DIC\Container;
+use DI\Container;
 use Doctrine\ORM\ORMSetup;
 use Slim\Factory\AppFactory;
 use Doctrine\ORM\EntityManager;
 use Doctrine\DBAL\DriverManager;
+use App\Repository\Customer\CustomerRepository;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use App\Repository\Customer\CustomerRepositoryInterface;
+use DI\ContainerBuilder;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-$container = new Container(require __DIR__ . '/config/app.php');
+$settings = require __DIR__ . '/config/app.php';
 
-$container->set(EntityManager::class, static function (Container $c): EntityManager {
-    $settings = $c->get('settings');
+$containerBuilder = new ContainerBuilder();
 
-    $cache = $settings['doctrine']['dev_mode'] ?
-        new ArrayAdapter() :
-        new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']);
+$containerBuilder->addDefinitions([
+    EntityManager::class => function () use ($settings) {
+        $cache = $settings['doctrine']['dev_mode'] ? new ArrayAdapter() : new FilesystemAdapter(directory: $settings['doctrine']['cache_dir']);
+        $config = ORMSetup::createAttributeMetadataConfiguration([__DIR__ . '/src/Entity'], $settings['doctrine']['dev_mode'], null, $cache);
+        $connection = DriverManager::getConnection($settings['doctrine']['connection']);
 
-    $config = ORMSetup::createAttributeMetadataConfiguration(
-        $settings['doctrine']['metadata_dirs'],
-        $settings['doctrine']['dev_mode'],
-        null,
-        $cache
-    );
+        return  new EntityManager($connection, $config);
+    },
+    CustomerRepositoryInterface::class => function ($container) {
+        return new CustomerRepository($container->get(EntityManager::class));
+    }
+]);
 
-    $connection = DriverManager::getConnection($settings['doctrine']['connection']);
-
-    return new EntityManager($connection, $config);
-});
+$container = $containerBuilder->build();
 
 AppFactory::setContainer($container);
 $app = AppFactory::create();

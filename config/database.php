@@ -7,5 +7,5 @@ return [
     'user' => $_ENV['DB_USERNAME'],
     'password' => $_ENV['DB_PASSWORD'],
     'port' => $_ENV['DB_PORT'],
-    'charset' => 'utf8mb4',
+    'charset' => 'utf8',
 ];

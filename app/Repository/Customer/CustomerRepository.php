@@ -2,21 +2,16 @@
 
 namespace App\Repository\Customer;
 
-use App\Model\Customer;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Customer;
+use Doctrine\ORM\EntityManager;
 
 class CustomerRepository implements CustomerRepositoryInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
+    public function __construct(private EntityManager $entityManager) {}
 
     public function findAll(): array
     {
-        return [];
+        return $this->entityManager->getRepository(Customer::class)->findAll();
     }
 
     public function findById(int $id)
