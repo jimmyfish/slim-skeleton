@@ -17,7 +17,7 @@
 
 ### Copying `.env` from `.env.example`
 
-```bash
+```console
 $ cp .env.example .env
 ```
 
