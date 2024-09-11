@@ -1,0 +1,7 @@
+vendor/
+public/cache/
+logs/
+.env
+
+var/
+public/cache/
