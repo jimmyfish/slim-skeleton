@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 
 abstract class BaseController
 {
@@ -11,6 +10,8 @@ abstract class BaseController
     {
         $response->getBody()->write(json_encode($data));
 
-        return $response->withHeader('Content-Type', 'application/json')->withStatus($status);
+        return $response
+            ->withHeader('Content-Type', 'application/json')
+            ->withStatus($status);
     }
 }
